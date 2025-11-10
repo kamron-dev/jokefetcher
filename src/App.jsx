@@ -36,8 +36,7 @@ export default function App() {
     error: ""
   });
 
-
-  useEffect(() => {
+  const fetchAJoke = () => {
     dispatch({ type: "fetch_started" });
     fetch("https://official-joke-api.appspot.com/random_joke")
       .then(res => res.json())
@@ -45,8 +44,12 @@ export default function App() {
         dispatch({ type: "fetch_success", joke: data });
       })
       .catch(err => {
-      dispatch({type: "fetch_failed", error: err.message})
-    })
+        dispatch({ type: "fetch_failed", error: err.message })
+      });
+  }
+
+  useEffect(() => {
+    fetchAJoke();
 
   }, [])
 
@@ -59,7 +62,7 @@ export default function App() {
         {jokeState.joke.setup} <br />
         {jokeState.joke.punchline}
       </h2>
-      <button onClick={() => window.location.reload(true)}>Get a new joke</button>
+      <button onClick={fetchAJoke}>Get a new joke</button>
     </div>
   );
 };
