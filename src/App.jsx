@@ -62,7 +62,7 @@ export default function App() {
         {jokeState.joke.setup} <br />
         {jokeState.joke.punchline}
       </h2>
-      <button onClick={fetchAJoke}>Get a new joke</button>
+      <button onClick={fetchAJoke}>New joke</button>
     </div>
   );
 };
