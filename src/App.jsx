@@ -36,17 +36,16 @@ export default function App() {
     error: ""
   });
 
-  const fetchAJoke = () => {
+  async function fetchAJoke() {
+  try {
     dispatch({ type: "fetch_started" });
-    fetch("https://official-joke-api.appspot.com/random_joke")
-      .then(res => res.json())
-      .then(data => {
-        dispatch({ type: "fetch_success", joke: data });
-      })
-      .catch(err => {
-        dispatch({ type: "fetch_failed", error: err.message })
-      });
-  }
+    const res = await fetch("https://official-joke-api.appspot.com/random_joke");
+    const data = await res.json();
+    dispatch({ type: "fetch_success", joke: data });
+  } catch (err) {
+    dispatch({ type: "fetch_failed", error: err.message });
+  };
+};
 
   useEffect(() => {
     fetchAJoke();
@@ -71,3 +70,27 @@ export default function App() {
 
 
 
+
+
+// const fetchAJoke = () => {
+//     dispatch({ type: "fetch_started" });
+//     fetch("https://official-joke-api.appspot.com/random_joke")
+//       .then(res => res.json())
+//       .then(data => {
+//         dispatch({ type: "fetch_success", joke: data });
+//       })
+//       .catch(err => {
+//         dispatch({ type: "fetch_failed", error: err.message })
+//       });
+//   }
+
+// async function fetchAJoke() {
+//   try {
+//     dispatch({ type: "fetch_started" });
+//     const res = await fetch("https://official-joke-api.appspot.com/random_joke");
+//     const data = await res.json();
+//     dispatch({ type: "fetch_success", joke: data });
+//   } catch (err) {
+//     dispatch({ type: "fetch_failed", error: err.message });
+//   };
+// };
