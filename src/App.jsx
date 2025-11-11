@@ -26,8 +26,8 @@ function actionsReducer(state, action) {
       }
     }  
     default: return state;
-  }
-}
+  };
+};
 
 export default function App() {
   const [jokeState, dispatch] = useReducer(actionsReducer, {
@@ -50,13 +50,12 @@ export default function App() {
   useEffect(() => {
     fetchAJoke();
 
-  }, [])
-
-  if (jokeState.loading) return <h2>Loading...</h2>
-  if (jokeState.error) throw new Error(jokeState.error);
+  }, []);
 
   return (
     <div>
+      {jokeState.loading && <h2>Loading...</h2>}
+      {jokeState.error && <h2>Error occured: {jokeState.error}</h2>}
       <h2>
         {jokeState.joke.setup} <br />
         {jokeState.joke.punchline}
@@ -72,25 +71,3 @@ export default function App() {
 
 
 
-// const fetchAJoke = () => {
-//     dispatch({ type: "fetch_started" });
-//     fetch("https://official-joke-api.appspot.com/random_joke")
-//       .then(res => res.json())
-//       .then(data => {
-//         dispatch({ type: "fetch_success", joke: data });
-//       })
-//       .catch(err => {
-//         dispatch({ type: "fetch_failed", error: err.message })
-//       });
-//   }
-
-// async function fetchAJoke() {
-//   try {
-//     dispatch({ type: "fetch_started" });
-//     const res = await fetch("https://official-joke-api.appspot.com/random_joke");
-//     const data = await res.json();
-//     dispatch({ type: "fetch_success", joke: data });
-//   } catch (err) {
-//     dispatch({ type: "fetch_failed", error: err.message });
-//   };
-// };
